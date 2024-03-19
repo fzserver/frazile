@@ -50,7 +50,7 @@ class _HomePageState extends State<HomePage> {
       imageHeight = Sizes(context).height / 2 * .6;
     }
     final facemashProvider = Provider.of<FacemashProvider>(context);
-    // final List<Images> images = facemashProvider.facemashModel!.data!;
+    // final List<Images> images = facemashProvider.images;
 
     return Scaffold(
       appBar: AppBar(
@@ -111,18 +111,19 @@ class _HomePageState extends State<HomePage> {
                           children: [
                             InkWell(
                               onTap: () {
-                                Constants.logger.w(
-                                    'ID:${facemashProvider.facemashModel!.data![0].id!}');
-                                Constants.logger.w(facemashProvider
-                                    .facemashModel!.data![0].imageurl!);
-                                Constants.logger.w(facemashProvider
-                                    .facemashModel!.data![0].wins!);
-                                Constants.logger.w(facemashProvider
-                                    .facemashModel!.data![0].losses!);
-                                Constants.logger.w(facemashProvider
-                                    .facemashModel!.data![0].score!);
-                                Constants.logger.w(facemashProvider
-                                    .facemashModel!.data![0].expected!);
+                                Constants.logger
+                                    .w('ID:${facemashProvider.images[0].id!}');
+                                Constants.logger
+                                    .w(facemashProvider.images[0].imageurl!);
+                                Constants.logger
+                                    .w(facemashProvider.images[0].wins!);
+                                Constants.logger
+                                    .w(facemashProvider.images[0].losses!);
+                                Constants.logger
+                                    .w(facemashProvider.images[0].score!);
+                                Constants.logger
+                                    .w(facemashProvider.images[0].expected!);
+                                facemashProvider.fetchimages();
                               },
                               child: AnimatedOpacity(
                                 duration:
@@ -138,8 +139,7 @@ class _HomePageState extends State<HomePage> {
                                         Sizes(context).width * .01),
                                     image: DecorationImage(
                                       image: NetworkImage(
-                                        facemashProvider
-                                            .facemashModel!.data![0].imageurl!,
+                                        facemashProvider.images[0].imageurl!,
                                       ),
                                       fit: BoxFit.cover,
                                     ),
@@ -148,7 +148,7 @@ class _HomePageState extends State<HomePage> {
                               ),
                             ),
                             Text(
-                              'Won: ${facemashProvider.facemashModel!.data![0].wins!}, Lost: ${facemashProvider.facemashModel!.data![0].losses!}',
+                              'Won: ${facemashProvider.images[0].wins!}, Lost: ${facemashProvider.images[0].losses!}',
                               style: TextStyle(
                                 color:
                                     FzColors.hexToColor(FzColors.facemashColor),
@@ -156,7 +156,7 @@ class _HomePageState extends State<HomePage> {
                               ),
                             ),
                             Text(
-                              'Score: ${facemashProvider.facemashModel!.data![0].score!}',
+                              'Score: ${facemashProvider.images[0].score!}',
                               style: TextStyle(
                                 color:
                                     FzColors.hexToColor(FzColors.facemashColor),
@@ -164,7 +164,7 @@ class _HomePageState extends State<HomePage> {
                               ),
                             ),
                             Text(
-                              'Expected: ${facemashProvider.facemashModel!.data![0].expected!}',
+                              'Expected: ${facemashProvider.images[0].expected!}',
                               style: TextStyle(
                                 color:
                                     FzColors.hexToColor(FzColors.facemashColor),
@@ -180,18 +180,19 @@ class _HomePageState extends State<HomePage> {
                           children: [
                             InkWell(
                               onTap: () {
-                                Constants.logger.w(
-                                    'ID:${facemashProvider.facemashModel!.data![1].id!}');
-                                Constants.logger.w(facemashProvider
-                                    .facemashModel!.data![1].imageurl!);
-                                Constants.logger.w(facemashProvider
-                                    .facemashModel!.data![1].wins!);
-                                Constants.logger.w(facemashProvider
-                                    .facemashModel!.data![1].losses!);
-                                Constants.logger.w(facemashProvider
-                                    .facemashModel!.data![1].score!);
-                                Constants.logger.w(facemashProvider
-                                    .facemashModel!.data![1].expected!);
+                                Constants.logger
+                                    .w('ID:${facemashProvider.images[1].id!}');
+                                Constants.logger
+                                    .w(facemashProvider.images[1].imageurl!);
+                                Constants.logger
+                                    .w(facemashProvider.images[1].wins!);
+                                Constants.logger
+                                    .w(facemashProvider.images[1].losses!);
+                                Constants.logger
+                                    .w(facemashProvider.images[1].score!);
+                                Constants.logger
+                                    .w(facemashProvider.images[1].expected!);
+                                facemashProvider.fetchimages();
                               },
                               child: AnimatedOpacity(
                                 duration:
@@ -207,8 +208,7 @@ class _HomePageState extends State<HomePage> {
                                         Sizes(context).width * .01),
                                     image: DecorationImage(
                                       image: NetworkImage(
-                                        facemashProvider
-                                            .facemashModel!.data![1].imageurl!,
+                                        facemashProvider.images[1].imageurl!,
                                       ),
                                       fit: BoxFit.cover,
                                     ),
@@ -217,7 +217,7 @@ class _HomePageState extends State<HomePage> {
                               ),
                             ),
                             Text(
-                              'Won: ${facemashProvider.facemashModel!.data![1].wins!}, Lost: ${facemashProvider.facemashModel!.data![1].losses!}',
+                              'Won: ${facemashProvider.images[1].wins!}, Lost: ${facemashProvider.images[1].losses!}',
                               style: TextStyle(
                                 color:
                                     FzColors.hexToColor(FzColors.facemashColor),
@@ -225,7 +225,7 @@ class _HomePageState extends State<HomePage> {
                               ),
                             ),
                             Text(
-                              'Score: ${facemashProvider.facemashModel!.data![1].score!}',
+                              'Score: ${facemashProvider.images[1].score!}',
                               style: TextStyle(
                                 color:
                                     FzColors.hexToColor(FzColors.facemashColor),
@@ -233,7 +233,7 @@ class _HomePageState extends State<HomePage> {
                               ),
                             ),
                             Text(
-                              'Expected: ${facemashProvider.facemashModel!.data![1].expected!}',
+                              'Expected: ${facemashProvider.images[1].expected!}',
                               style: TextStyle(
                                 color:
                                     FzColors.hexToColor(FzColors.facemashColor),
