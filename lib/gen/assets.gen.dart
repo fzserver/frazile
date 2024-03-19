@@ -9,6 +9,16 @@
 
 import 'package:flutter/widgets.dart';
 
+class $AssetsJsonGen {
+  const $AssetsJsonGen();
+
+  /// File path: assets/json/data.json
+  String get data => 'assets/json/data.json';
+
+  /// List of all assets
+  List<String> get values => [data];
+}
+
 class $AssetsLogoGen {
   const $AssetsLogoGen();
 
@@ -22,6 +32,7 @@ class $AssetsLogoGen {
 class Assets {
   Assets._();
 
+  static const $AssetsJsonGen json = $AssetsJsonGen();
   static const $AssetsLogoGen logo = $AssetsLogoGen();
 }
 

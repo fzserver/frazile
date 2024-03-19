@@ -1,0 +1,46 @@
+{
+    "status": true,
+    "data": [
+        {
+            "id": "018e5789-403c-765a-99bf-65b8d7a8a1dc",
+            "imageurl": "https://images.unsplash.com/photo-1601288496920-b6154fe3626a?q=80&w=1826&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+            "wins": 1,
+            "losses": 10,
+            "score": 1500,
+            "expected": 0.5
+        },
+        {
+            "id": "018e578c-11e1-7842-947f-bc8d8b611010",
+            "imageurl": "https://images.unsplash.com/photo-1524638431109-93d95c968f03?q=80&w=2787&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+            "wins": 2,
+            "losses": 10,
+            "score": 1200,
+            "expected": 0.2
+        },
+        {
+            "id": "018e578c-4041-716a-a2cb-e3e9cb5a04e6",
+            "imageurl": "https://images.unsplash.com/photo-1504276048855-f3d60e69632f?q=80&w=2785&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+            "wins": 10,
+            "losses": 20,
+            "score": 1412,
+            "expected": 0.65
+        },
+        {
+            "id": "018e578c-7ddb-77bb-bc53-0710560c89db",
+            "imageurl": "https://images.unsplash.com/photo-1533618821901-9e69d5f5360e?q=80&w=2787&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+            "wins": 3,
+            "losses": 5,
+            "score": 1342,
+            "expected": 0.4
+        },
+        {
+            "id": "018e578c-9ea9-71c2-b8e3-508e7ea052ef",
+            "imageurl": "https://images.unsplash.com/photo-1620232224149-25be08bdec08?q=80&w=2787&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+            "wins": 200,
+            "losses": 100,
+            "score": 2012,
+            "expected": 0.3213
+        }
+    ],
+    "message": "images retrieved successfully"
+}

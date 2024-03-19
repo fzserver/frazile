@@ -1,8 +1,11 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
+import 'package:frazile/constants/color.dart';
 import 'package:frazile/constants/constants.dart';
-import 'package:frazile/gen/assets.gen.dart';
+import 'package:frazile/extensions/fzPlatform.dart';
+import 'package:frazile/provider/facemashapi.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:provider/provider.dart';
+import '../constants/sizes.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({super.key});
@@ -12,15 +15,18 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
-  double _opacity = 0.0; // Initial opacity
+  double _opacity = 0.0;
+  late double imageWidth;
+  late double imageHeight;
 
   @override
   void initState() {
     super.initState();
+    Provider.of<FacemashProvider>(context, listen: false).fetchimages();
     // Triggering the animation after a short delay
     Future.delayed(Duration(milliseconds: 500), () {
       setState(() {
-        _opacity = 1.0; // Setting opacity to 1 for fade-in effect
+        _opacity = 1.0;
       });
     });
   }
@@ -32,121 +38,215 @@ class _HomePageState extends State<HomePage> {
 
   @override
   Widget build(BuildContext context) {
-    final mq = MediaQuery.of(context).size;
-    final width = mq.width;
-    final height = mq.height;
+    if (isWeb()) {
+      imageWidth = Sizes(context).width * .25;
+      imageHeight = Sizes(context).height * .6;
+    } else {
+      if (isAndroid() || isIOS()) {
+        imageWidth = Sizes(context).width * .35;
+        imageHeight = Sizes(context).height / 2 * .6;
+      }
+      imageWidth = Sizes(context).width * .35;
+      imageHeight = Sizes(context).height / 2 * .6;
+    }
+    final facemashProvider = Provider.of<FacemashProvider>(context);
+    // final List<Images> images = facemashProvider.facemashModel!.data!;
+
     return Scaffold(
       appBar: AppBar(
-        title: Text('Frazile'),
-      ),
-      body: Center(
-        child: SingleChildScrollView(
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            crossAxisAlignment: CrossAxisAlignment.center,
-            mainAxisSize: MainAxisSize.max,
-            children: [
-              Text(
-                'Were we let in for our looks? No. Will we be judged on them? Yes.',
-                style: GoogleFonts.caveat(
-                  fontSize: width * .035,
-                  color: Colors.pink,
-                ),
-              ),
-              Text(
-                'Who\'s Hotter? Click to Choose.',
-                style: GoogleFonts.caveat(
-                  fontSize: width * .03,
-                  color: Colors.pink,
-                ),
-              ),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                crossAxisAlignment: CrossAxisAlignment.center,
-                mainAxisSize: MainAxisSize.max,
-                children: [
-                  // Container(
-                  //   width: width * .4,
-                  //   height: width * .4,
-                  //   decoration: BoxDecoration(
-                  //     color: Colors.pink,
-                  //     borderRadius: BorderRadius.circular(width * .01),
-                  //     image: DecorationImage(
-                  //       image: AssetImage(Assets.logo.logo.path),
-                  //       fit: BoxFit.cover,
-                  //     ),
-                  //   ),
-                  // ),
-                  Column(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    mainAxisSize: MainAxisSize.min,
-                    children: [
-                      InkWell(
-                        onTap: () {
-                          Constants.logger.w('ID: 1');
-                        },
-                        child: AnimatedOpacity(
-                          duration: Duration(seconds: 1), // Animation duration
-                          opacity: _opacity, // Opacity value
-                          child: Container(
-                            width: width * .25,
-                            height: height * .6,
-                            decoration: BoxDecoration(
-                              color: Colors.pink,
-                              borderRadius: BorderRadius.circular(width * .01),
-                              image: DecorationImage(
-                                image: NetworkImage(
-                                  'https://images.unsplash.com/photo-1668650870010-0a81e62a54cb?q=80&w=2787&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D',
-                                ),
-                                fit: BoxFit.cover,
-                              ),
-                            ),
-                          ),
-                        ),
-                      ),
-                      Text('Won: 1, Lost: 10'),
-                      Text('Score: 1500'),
-                      Text('Expected: 0.5'),
-                    ],
-                  ),
-                  Column(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    mainAxisSize: MainAxisSize.min,
-                    children: [
-                      InkWell(
-                        onTap: () {
-                          Constants.logger.w('ID: 2');
-                        },
-                        child: AnimatedOpacity(
-                          duration: Duration(seconds: 1), // Animation duration
-                          opacity: _opacity, // Opacity value
-                          child: Container(
-                            width: width * .25,
-                            height: height * .6,
-                            decoration: BoxDecoration(
-                              color: Colors.pink,
-                              borderRadius: BorderRadius.circular(width * .01),
-                              image: DecorationImage(
-                                image: NetworkImage(
-                                    'https://images.unsplash.com/photo-1531069809673-062827451d48?q=80&w=2787&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D'),
-                                fit: BoxFit.cover,
-                              ),
-                            ),
-                          ),
-                        ),
-                      ),
-                      Text('Won: 10, Lost: 1'),
-                      Text('Score: 1500'),
-                      Text('Expected: 0.5'),
-                    ],
-                  ),
-                ],
-              ),
-            ],
+        title: Text(
+          Constants.appName,
+          style: TextStyle(
+            color: Colors.white,
           ),
         ),
+        backgroundColor: FzColors.hexToColor(FzColors.facemashColor),
+      ),
+      body: Center(
+        child: facemashProvider.isFetching
+            ? CircularProgressIndicator(
+                color: FzColors.hexToColor(FzColors.facemashColor),
+              )
+            : SingleChildScrollView(
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  mainAxisSize: MainAxisSize.max,
+                  children: [
+                    Text(
+                      'Were we let in for our looks? No. Will we be judged on them? Yes.',
+                      style: GoogleFonts.caveat(
+                        fontSize: Sizes(context).width * .035,
+                        color: FzColors.hexToColor(FzColors.facemashColor),
+                      ),
+                    ),
+                    Text(
+                      'Who\'s Hotter? Click to Choose.',
+                      style: GoogleFonts.caveat(
+                        fontSize: Sizes(context).width * .03,
+                        color: FzColors.hexToColor(FzColors.facemashColor),
+                      ),
+                    ),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                      crossAxisAlignment: CrossAxisAlignment.center,
+                      mainAxisSize: MainAxisSize.max,
+                      children: [
+                        // Container(
+                        //   width: Sizes(context).width * .4,
+                        //   height: Sizes(context).width * .4,
+                        //   decoration: BoxDecoration(
+                        //     color: FzColors.hexToColor(FzColors.facemashColor),
+                        //     borderRadius: BorderRadius.circular(Sizes(context).width * .01),
+                        //     image: DecorationImage(
+                        //       image: AssetImage(Assets.logo.logo.path),
+                        //       fit: BoxFit.cover,
+                        //     ),
+                        //   ),
+                        // ),
+                        Column(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          mainAxisSize: MainAxisSize.min,
+                          children: [
+                            InkWell(
+                              onTap: () {
+                                Constants.logger.w(
+                                    'ID:${facemashProvider.facemashModel!.data![0].id!}');
+                                Constants.logger.w(facemashProvider
+                                    .facemashModel!.data![0].imageurl!);
+                                Constants.logger.w(facemashProvider
+                                    .facemashModel!.data![0].wins!);
+                                Constants.logger.w(facemashProvider
+                                    .facemashModel!.data![0].losses!);
+                                Constants.logger.w(facemashProvider
+                                    .facemashModel!.data![0].score!);
+                                Constants.logger.w(facemashProvider
+                                    .facemashModel!.data![0].expected!);
+                              },
+                              child: AnimatedOpacity(
+                                duration:
+                                    Duration(seconds: 1), // Animation duration
+                                opacity: _opacity, // Opacity value
+                                child: Container(
+                                  width: imageWidth,
+                                  height: imageHeight,
+                                  decoration: BoxDecoration(
+                                    color: FzColors.hexToColor(
+                                        FzColors.facemashColor),
+                                    borderRadius: BorderRadius.circular(
+                                        Sizes(context).width * .01),
+                                    image: DecorationImage(
+                                      image: NetworkImage(
+                                        facemashProvider
+                                            .facemashModel!.data![0].imageurl!,
+                                      ),
+                                      fit: BoxFit.cover,
+                                    ),
+                                  ),
+                                ),
+                              ),
+                            ),
+                            Text(
+                              'Won: ${facemashProvider.facemashModel!.data![0].wins!}, Lost: ${facemashProvider.facemashModel!.data![0].losses!}',
+                              style: TextStyle(
+                                color:
+                                    FzColors.hexToColor(FzColors.facemashColor),
+                                fontWeight: FontWeight.bold,
+                              ),
+                            ),
+                            Text(
+                              'Score: ${facemashProvider.facemashModel!.data![0].score!}',
+                              style: TextStyle(
+                                color:
+                                    FzColors.hexToColor(FzColors.facemashColor),
+                                fontWeight: FontWeight.bold,
+                              ),
+                            ),
+                            Text(
+                              'Expected: ${facemashProvider.facemashModel!.data![0].expected!}',
+                              style: TextStyle(
+                                color:
+                                    FzColors.hexToColor(FzColors.facemashColor),
+                                fontWeight: FontWeight.bold,
+                              ),
+                            ),
+                          ],
+                        ),
+                        Column(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          mainAxisSize: MainAxisSize.min,
+                          children: [
+                            InkWell(
+                              onTap: () {
+                                Constants.logger.w(
+                                    'ID:${facemashProvider.facemashModel!.data![1].id!}');
+                                Constants.logger.w(facemashProvider
+                                    .facemashModel!.data![1].imageurl!);
+                                Constants.logger.w(facemashProvider
+                                    .facemashModel!.data![1].wins!);
+                                Constants.logger.w(facemashProvider
+                                    .facemashModel!.data![1].losses!);
+                                Constants.logger.w(facemashProvider
+                                    .facemashModel!.data![1].score!);
+                                Constants.logger.w(facemashProvider
+                                    .facemashModel!.data![1].expected!);
+                              },
+                              child: AnimatedOpacity(
+                                duration:
+                                    Duration(seconds: 1), // Animation duration
+                                opacity: _opacity, // Opacity value
+                                child: Container(
+                                  width: imageWidth,
+                                  height: imageHeight,
+                                  decoration: BoxDecoration(
+                                    color: FzColors.hexToColor(
+                                        FzColors.facemashColor),
+                                    borderRadius: BorderRadius.circular(
+                                        Sizes(context).width * .01),
+                                    image: DecorationImage(
+                                      image: NetworkImage(
+                                        facemashProvider
+                                            .facemashModel!.data![1].imageurl!,
+                                      ),
+                                      fit: BoxFit.cover,
+                                    ),
+                                  ),
+                                ),
+                              ),
+                            ),
+                            Text(
+                              'Won: ${facemashProvider.facemashModel!.data![1].wins!}, Lost: ${facemashProvider.facemashModel!.data![1].losses!}',
+                              style: TextStyle(
+                                color:
+                                    FzColors.hexToColor(FzColors.facemashColor),
+                                fontWeight: FontWeight.bold,
+                              ),
+                            ),
+                            Text(
+                              'Score: ${facemashProvider.facemashModel!.data![1].score!}',
+                              style: TextStyle(
+                                color:
+                                    FzColors.hexToColor(FzColors.facemashColor),
+                                fontWeight: FontWeight.bold,
+                              ),
+                            ),
+                            Text(
+                              'Expected: ${facemashProvider.facemashModel!.data![1].expected!}',
+                              style: TextStyle(
+                                color:
+                                    FzColors.hexToColor(FzColors.facemashColor),
+                                fontWeight: FontWeight.bold,
+                              ),
+                            ),
+                          ],
+                        ),
+                      ],
+                    ),
+                  ],
+                ),
+              ),
       ),
     );
   }

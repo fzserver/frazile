@@ -1,3 +1,5 @@
+import 'dart:ui';
+
 class FzColors {
   FzColors._();
 
@@ -15,4 +17,12 @@ class FzColors {
 
   /// Linkedin Hex Color Code
   static const String linkedinColor = '';
+
+  /// Text Color White Hex Color Code
+  static const String textColorWhite = '#FFFFFF';
+
+  //* Hex to Color
+  //* Construct a color from a hex code string, of the format #RRGGBB
+  static Color hexToColor(String code) =>
+      Color(int.parse(code.substring(1, 7), radix: 16) + 0xFF000000);
 }
