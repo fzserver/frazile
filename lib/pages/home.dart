@@ -39,8 +39,16 @@ class _HomePageState extends State<HomePage> {
   @override
   Widget build(BuildContext context) {
     if (isWeb()) {
-      imageWidth = Sizes(context).width * .25;
-      imageHeight = Sizes(context).height * .6;
+      if (Sizes(context).width < 600) {
+        imageWidth = Sizes(context).width * .35;
+        imageHeight = Sizes(context).height / 2 * .6;
+      } else if (Sizes(context).width < 1200) {
+        imageWidth = Sizes(context).width * .25;
+        imageHeight = Sizes(context).height * .6;
+      } else {
+        imageWidth = Sizes(context).width * .25;
+        imageHeight = Sizes(context).height * .6;
+      }
     } else {
       if (isAndroid() || isIOS()) {
         imageWidth = Sizes(context).width * .35;
