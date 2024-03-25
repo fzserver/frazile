@@ -16,6 +16,12 @@ class APIConstants {
   /// Rate Abstract endpoint
   static const String rateabstractendpoint = '/rateabstract';
 
+  /// Sexy endpoint
+  static const String sexyendpoint = '/sexy';
+
+  /// Rate Abstract endpoint
+  static const String ratesexyendpoint = '/ratesexy';
+
   /// content type
   static const String contenttype = 'Content-Type';
 

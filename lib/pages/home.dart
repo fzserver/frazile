@@ -44,10 +44,10 @@ class _HomePageState extends State<HomePage> {
         imageWidth = Sizes(context).width * .35;
         imageHeight = Sizes(context).height / 2 * .6;
       } else if (Sizes(context).width < 1200) {
-        imageWidth = Sizes(context).width * .25;
+        imageWidth = Sizes(context).width * .2;
         imageHeight = Sizes(context).height * .6;
       } else {
-        imageWidth = Sizes(context).width * .25;
+        imageWidth = Sizes(context).width * .2;
         imageHeight = Sizes(context).height * .6;
       }
     } else {
@@ -78,21 +78,21 @@ class _HomePageState extends State<HomePage> {
               )
             : SingleChildScrollView(
                 child: Column(
-                  mainAxisAlignment: MainAxisAlignment.center,
+                  mainAxisAlignment: MainAxisAlignment.start,
                   crossAxisAlignment: CrossAxisAlignment.center,
                   mainAxisSize: MainAxisSize.max,
                   children: [
                     Text(
                       'Were we let in for our looks? No. Will we be judged on them? Yes.',
                       style: GoogleFonts.caveat(
-                        fontSize: Sizes(context).width * .035,
+                        fontSize: Sizes(context).width * .03,
                         color: FzColors.hexToColor(FzColors.facemashColor),
                       ),
                     ),
                     Text(
                       'Who\'s Hotter? Click to Choose.',
                       style: GoogleFonts.caveat(
-                        fontSize: Sizes(context).width * .03,
+                        fontSize: Sizes(context).width * .025,
                         color: FzColors.hexToColor(FzColors.facemashColor),
                       ),
                     ),

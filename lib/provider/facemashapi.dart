@@ -32,7 +32,7 @@ class FacemashProvider with ChangeNotifier {
 
     // Set headers with content type as application/json
     final headers = {
-      'Access-Control-Allow-Origin': '*',
+      // 'Access-Control-Allow-Origin': '*',
       APIConstants.contenttype: APIConstants.contentjson,
     };
 
@@ -41,7 +41,7 @@ class FacemashProvider with ChangeNotifier {
       Uri.parse(
         APIConstants.secureprotocol +
             APIConstants.baseURL +
-            APIConstants.abstractendpoint,
+            APIConstants.sexyendpoint,
       ),
       headers: headers,
       body: body,
@@ -79,7 +79,7 @@ class FacemashProvider with ChangeNotifier {
 
     // Set headers with content type as application/json
     final headers = {
-      'Access-Control-Allow-Origin': '*',
+      // 'Access-Control-Allow-Origin': '*',
       APIConstants.contenttype: APIConstants.contentjson,
     };
 
@@ -88,7 +88,7 @@ class FacemashProvider with ChangeNotifier {
       Uri.parse(
         APIConstants.secureprotocol +
             APIConstants.baseURL +
-            APIConstants.rateabstractendpoint,
+            APIConstants.ratesexyendpoint,
       ),
       headers: headers,
       body: body,
