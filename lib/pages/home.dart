@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:frazile/constants/color.dart';
 import 'package:frazile/constants/constants.dart';
 import 'package:frazile/extensions/fzPlatform.dart';
+import 'package:frazile/functions/algorithm.dart';
 import 'package:frazile/provider/facemashapi.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
@@ -119,19 +120,26 @@ class _HomePageState extends State<HomePage> {
                           children: [
                             InkWell(
                               onTap: () {
-                                Constants.logger
-                                    .w('ID:${facemashProvider.images[0].id!}');
-                                Constants.logger
-                                    .w(facemashProvider.images[0].imageurl!);
-                                Constants.logger
-                                    .w(facemashProvider.images[0].wins!);
-                                Constants.logger
-                                    .w(facemashProvider.images[0].losses!);
-                                Constants.logger
-                                    .w(facemashProvider.images[0].score!);
-                                Constants.logger
-                                    .w(facemashProvider.images[0].expected!);
-                                facemashProvider.fetchimages();
+                                Constants.logger.w(
+                                    'ID:${facemashProvider.abstarctModel!.data!.images![0].id!}');
+                                Constants.logger.w(
+                                  facemashProvider
+                                          .abstarctModel!.data!.baseUrl! +
+                                      facemashProvider.abstarctModel!.data!
+                                          .images![0].filename!,
+                                );
+                                Constants.logger.w(facemashProvider
+                                    .abstarctModel!.data!.images![0].wins!);
+                                Constants.logger.w(facemashProvider
+                                    .abstarctModel!.data!.images![0].losses!);
+                                Constants.logger.w(facemashProvider
+                                    .abstarctModel!.data!.images![0].score!);
+                                // facemashProvider.fetchimages();
+                                facemashProvider.rateimages(
+                                    facemashProvider
+                                        .abstarctModel!.data!.images![0].id!,
+                                    facemashProvider
+                                        .abstarctModel!.data!.images![1].id!);
                               },
                               child: AnimatedOpacity(
                                 duration:
@@ -147,7 +155,10 @@ class _HomePageState extends State<HomePage> {
                                         Sizes(context).width * .01),
                                     image: DecorationImage(
                                       image: NetworkImage(
-                                        facemashProvider.images[0].imageurl!,
+                                        facemashProvider
+                                                .abstarctModel!.data!.baseUrl! +
+                                            facemashProvider.abstarctModel!
+                                                .data!.images![0].filename!,
                                       ),
                                       fit: BoxFit.cover,
                                     ),
@@ -156,7 +167,7 @@ class _HomePageState extends State<HomePage> {
                               ),
                             ),
                             Text(
-                              'Won: ${facemashProvider.images[0].wins!}, Lost: ${facemashProvider.images[0].losses!}',
+                              'Won: ${facemashProvider.abstarctModel!.data!.images![0].wins!}, Lost: ${facemashProvider.abstarctModel!.data!.images![0].losses!}',
                               style: TextStyle(
                                 color:
                                     FzColors.hexToColor(FzColors.facemashColor),
@@ -164,7 +175,7 @@ class _HomePageState extends State<HomePage> {
                               ),
                             ),
                             Text(
-                              'Score: ${facemashProvider.images[0].score!}',
+                              'Score: ${facemashProvider.abstarctModel!.data!.images![0].score!}',
                               style: TextStyle(
                                 color:
                                     FzColors.hexToColor(FzColors.facemashColor),
@@ -172,7 +183,7 @@ class _HomePageState extends State<HomePage> {
                               ),
                             ),
                             Text(
-                              'Expected: ${facemashProvider.images[0].expected!}',
+                              'Expected: ${expected(facemashProvider.abstarctModel!.data!.images![1].score!, facemashProvider.abstarctModel!.data!.images![0].score!).toStringAsFixed(4)}',
                               style: TextStyle(
                                 color:
                                     FzColors.hexToColor(FzColors.facemashColor),
@@ -188,19 +199,26 @@ class _HomePageState extends State<HomePage> {
                           children: [
                             InkWell(
                               onTap: () {
-                                Constants.logger
-                                    .w('ID:${facemashProvider.images[1].id!}');
-                                Constants.logger
-                                    .w(facemashProvider.images[1].imageurl!);
-                                Constants.logger
-                                    .w(facemashProvider.images[1].wins!);
-                                Constants.logger
-                                    .w(facemashProvider.images[1].losses!);
-                                Constants.logger
-                                    .w(facemashProvider.images[1].score!);
-                                Constants.logger
-                                    .w(facemashProvider.images[1].expected!);
-                                facemashProvider.fetchimages();
+                                Constants.logger.w(
+                                    'ID:${facemashProvider.abstarctModel!.data!.images![1].id!}');
+                                Constants.logger.w(
+                                  facemashProvider
+                                          .abstarctModel!.data!.baseUrl! +
+                                      facemashProvider.abstarctModel!.data!
+                                          .images![1].filename!,
+                                );
+                                Constants.logger.w(facemashProvider
+                                    .abstarctModel!.data!.images![1].wins!);
+                                Constants.logger.w(facemashProvider
+                                    .abstarctModel!.data!.images![1].losses!);
+                                Constants.logger.w(facemashProvider
+                                    .abstarctModel!.data!.images![1].score!);
+                                // facemashProvider.fetchimages();
+                                facemashProvider.rateimages(
+                                    facemashProvider
+                                        .abstarctModel!.data!.images![1].id!,
+                                    facemashProvider
+                                        .abstarctModel!.data!.images![0].id!);
                               },
                               child: AnimatedOpacity(
                                 duration:
@@ -216,7 +234,10 @@ class _HomePageState extends State<HomePage> {
                                         Sizes(context).width * .01),
                                     image: DecorationImage(
                                       image: NetworkImage(
-                                        facemashProvider.images[1].imageurl!,
+                                        facemashProvider
+                                                .abstarctModel!.data!.baseUrl! +
+                                            facemashProvider.abstarctModel!
+                                                .data!.images![1].filename!,
                                       ),
                                       fit: BoxFit.cover,
                                     ),
@@ -225,7 +246,7 @@ class _HomePageState extends State<HomePage> {
                               ),
                             ),
                             Text(
-                              'Won: ${facemashProvider.images[1].wins!}, Lost: ${facemashProvider.images[1].losses!}',
+                              'Won: ${facemashProvider.abstarctModel!.data!.images![1].wins!}, Lost: ${facemashProvider.abstarctModel!.data!.images![1].losses!}',
                               style: TextStyle(
                                 color:
                                     FzColors.hexToColor(FzColors.facemashColor),
@@ -233,7 +254,7 @@ class _HomePageState extends State<HomePage> {
                               ),
                             ),
                             Text(
-                              'Score: ${facemashProvider.images[1].score!}',
+                              'Score: ${facemashProvider.abstarctModel!.data!.images![1].score!}',
                               style: TextStyle(
                                 color:
                                     FzColors.hexToColor(FzColors.facemashColor),
@@ -241,7 +262,7 @@ class _HomePageState extends State<HomePage> {
                               ),
                             ),
                             Text(
-                              'Expected: ${facemashProvider.images[1].expected!}',
+                              'Expected: ${expected(facemashProvider.abstarctModel!.data!.images![0].score!, facemashProvider.abstarctModel!.data!.images![1].score!).toStringAsFixed(4)}',
                               style: TextStyle(
                                 color:
                                     FzColors.hexToColor(FzColors.facemashColor),
