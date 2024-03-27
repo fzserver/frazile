@@ -7,6 +7,7 @@ import 'package:frazile/provider/facemashapi.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
 import '../constants/sizes.dart';
+import 'package:flutter/services.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({super.key});
@@ -19,6 +20,7 @@ class _HomePageState extends State<HomePage> {
   double _opacity = 0.0;
   late double imageWidth;
   late double imageHeight;
+  final FocusNode _focusNode = FocusNode();
 
   @override
   void initState() {
@@ -34,6 +36,7 @@ class _HomePageState extends State<HomePage> {
 
   @override
   void dispose() {
+    _focusNode.dispose();
     super.dispose();
   }
 
@@ -76,7 +79,30 @@ class _HomePageState extends State<HomePage> {
             ? CircularProgressIndicator(
                 color: FzColors.hexToColor(FzColors.facemashColor),
               )
-            : SingleChildScrollView(
+            : 
+            KeyboardListener(
+        autofocus: true,
+        focusNode: _focusNode,
+        onKeyEvent: (KeyEvent event) {
+          if (event is KeyUpEvent) {
+            if (event.logicalKey == LogicalKeyboardKey.arrowLeft) {
+              facemashProvider.rateimages(
+                                    facemashProvider
+                                        .abstarctModel!.data!.images![0].id!,
+                                    facemashProvider
+                                        .abstarctModel!.data!.images![1].id!);
+            }
+            if (event.logicalKey == LogicalKeyboardKey.arrowRight) {
+             facemashProvider.rateimages(
+                                    facemashProvider
+                                        .abstarctModel!.data!.images![1].id!,
+                                    facemashProvider
+                                        .abstarctModel!.data!.images![0].id!);
+            }
+          }
+        },
+child:
+            SingleChildScrollView(
                 child: Column(
                   mainAxisAlignment: MainAxisAlignment.start,
                   crossAxisAlignment: CrossAxisAlignment.center,
@@ -275,6 +301,7 @@ class _HomePageState extends State<HomePage> {
                     ),
                   ],
                 ),
+              ),
               ),
       ),
     );
