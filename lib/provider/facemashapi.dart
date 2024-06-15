@@ -47,7 +47,7 @@ class FacemashProvider with ChangeNotifier {
       body: body,
     );
 
-    Constants.logger.w(response);
+    Constants.logger.w(response.body);
     Constants.logger.w(response.headers);
 
     final jsonData = jsonDecode(response.body);
